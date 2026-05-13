@@ -139,7 +139,7 @@ export default function App() {
         <header className="header">
           <div className="header-top">
             <h1 className="title">TaskFlow</h1>
-            <p className="subtitle">Stay organized, stay productive</p>
+            <p className="subtitle">Stay organized and stay productive</p>
           </div>
           <div className="stats">
             <div className="stat"><span className="stat-num">{counts.all}</span><span className="stat-label">Total</span></div>
