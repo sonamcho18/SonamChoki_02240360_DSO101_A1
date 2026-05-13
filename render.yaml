@@ -1,9 +1,7 @@
 services:
-  # Backend Web Service
   - type: web
     name: be-todo
     env: docker
-    rootDir: todo-app
     dockerfilePath: ./todo-app/backend/Dockerfile
     dockerContext: ./todo-app/backend
     envVars:
@@ -20,11 +18,9 @@ services:
       - key: PORT
         value: 5000
 
-  # Frontend Web Service
   - type: web
     name: fe-todo
     env: docker
-    rootDir: todo-app
     dockerfilePath: ./todo-app/frontend/Dockerfile
     dockerContext: ./todo-app/frontend
     envVars:
