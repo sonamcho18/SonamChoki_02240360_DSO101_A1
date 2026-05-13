@@ -27,7 +27,13 @@ pipeline {
             steps {
                 echo 'Installing backend dependencies...'
                 dir('todo-app/backend') {
-                    sh 'npm install'
+                    script {
+                        if (isUnix()) {
+                            sh 'npm install'
+                        } else {
+                            bat 'npm install'
+                        }
+                    }
                 }
             }
         }
@@ -37,7 +43,13 @@ pipeline {
             steps {
                 echo 'Running build...'
                 dir('todo-app/backend') {
-                    sh 'npm run build'
+                    script {
+                        if (isUnix()) {
+                            sh 'npm run build'
+                        } else {
+                            bat 'npm run build'
+                        }
+                    }
                 }
             }
         }
@@ -47,7 +59,13 @@ pipeline {
             steps {
                 echo 'Running unit tests...'
                 dir('todo-app/backend') {
-                    sh 'npm test'
+                    script {
+                        if (isUnix()) {
+                            sh 'npm test'
+                        } else {
+                            bat 'npm test'
+                        }
+                    }
                 }
             }
             post {
