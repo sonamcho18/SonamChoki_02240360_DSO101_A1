@@ -8,13 +8,13 @@ services:
     dockerContext: todo-app/backend
     envVars:
       - key: DB_HOST
-        value: dpg-d822933tqb8s73c6knm0-a.oregon-postgres.render.com
+        value: dpg-d8251egg4nts73fh14t0-a.oregon-postgres.render.com
       - key: DB_USER
-        value: todo_db_pps2_user
+        value: todo_db_35da_user
       - key: DB_PASSWORD
-        value: Azrziox9m7TBYyM0riJiEwprJTEjjTxc
+        value: lNP2vgzglkCvFAIyFUd70aj7AzJ7u2vN
       - key: DB_NAME
-        value: todo_db_pps2
+        value: todo_db_35da
       - key: DB_PORT
         value: 5432
       - key: PORT
@@ -29,4 +29,4 @@ services:
     dockerContext: todo-app/frontend
     envVars:
       - key: REACT_APP_API_URL
-        value: https://be-todo-02240360.onrender.com
+        value: https://be-todo-02240360-vzia.onrender.com
