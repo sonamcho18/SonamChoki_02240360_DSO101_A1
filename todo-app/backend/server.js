@@ -13,18 +13,34 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT || 5432,
-  ssl: { rejectUnauthorized: false },
+  ssl: process.env.DB_HOST ? { rejectUnauthorized: false } : false,
 });
 
 // Create table if not exists
-pool.query(`
-  CREATE TABLE IF NOT EXISTS tasks (
-    id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    completed BOOLEAN DEFAULT false,
-    created_at TIMESTAMP DEFAULT NOW()
-  )
-`).then(() => console.log('Table ready')).catch(err => console.error('Table error:', err));
+const initDB = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS tasks (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        completed BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT NOW()
+      )
+    `);
+    console.log('Table ready');
+  } catch (err) {
+    console.error('Table error:', err.message);
+  }
+};
+
+if (process.env.NODE_ENV !== 'test') {
+  initDB();
+}
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
 
 // GET all tasks
 app.get('/api/tasks', async (req, res) => {
@@ -39,10 +55,13 @@ app.get('/api/tasks', async (req, res) => {
 // POST create task
 app.post('/api/tasks', async (req, res) => {
   const { title } = req.body;
+  if (!title || !title.trim()) {
+    return res.status(400).json({ error: 'Title is required' });
+  }
   try {
     const result = await pool.query(
       'INSERT INTO tasks (title) VALUES ($1) RETURNING *',
-      [title]
+      [title.trim()]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -59,6 +78,9 @@ app.put('/api/tasks/:id', async (req, res) => {
       'UPDATE tasks SET title=$1, completed=$2 WHERE id=$3 RETURNING *',
       [title, completed, id]
     );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -76,8 +98,11 @@ app.delete('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// Health check
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+let server;
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = { app, pool };

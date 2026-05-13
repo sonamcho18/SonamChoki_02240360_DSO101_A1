@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="11" failures="0" errors="0" time="1.161">
+  <testsuite name="GET /health" errors="0" failures="0" skipped="0" timestamp="2026-05-13T11:43:04" time="1.054" tests="11">
+    <testcase classname="GET /health should return status ok" name="GET /health should return status ok" time="0.046">
+    </testcase>
+    <testcase classname="GET /api/tasks should return list of tasks" name="GET /api/tasks should return list of tasks" time="0.005">
+    </testcase>
+    <testcase classname="GET /api/tasks should return empty array when no tasks" name="GET /api/tasks should return empty array when no tasks" time="0.011">
+    </testcase>
+    <testcase classname="GET /api/tasks should return 500 on database error" name="GET /api/tasks should return 500 on database error" time="0.004">
+    </testcase>
+    <testcase classname="POST /api/tasks should create a new task" name="POST /api/tasks should create a new task" time="0.026">
+    </testcase>
+    <testcase classname="POST /api/tasks should return 400 if title is missing" name="POST /api/tasks should return 400 if title is missing" time="0.005">
+    </testcase>
+    <testcase classname="POST /api/tasks should return 400 if title is empty string" name="POST /api/tasks should return 400 if title is empty string" time="0.01">
+    </testcase>
+    <testcase classname="PUT /api/tasks/:id should update a task" name="PUT /api/tasks/:id should update a task" time="0.004">
+    </testcase>
+    <testcase classname="PUT /api/tasks/:id should return 404 if task not found" name="PUT /api/tasks/:id should return 404 if task not found" time="0.008">
+    </testcase>
+    <testcase classname="DELETE /api/tasks/:id should delete a task" name="DELETE /api/tasks/:id should delete a task" time="0.004">
+    </testcase>
+    <testcase classname="DELETE /api/tasks/:id should return 500 on database error" name="DELETE /api/tasks/:id should return 500 on database error" time="0.003">
+    </testcase>
+  </testsuite>
+</testsuites>
