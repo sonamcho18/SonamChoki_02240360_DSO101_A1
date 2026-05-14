@@ -24,6 +24,8 @@ TaskFlow is a full-stack To-Do List web application with a React frontend, Node.
 
 ### Blueprint CI/CD on Render
 ![Project Photo](image/render.png)
+![Project Photo](image/blueprint.png)
+
 
 
 ### Render dashboard showing the frontend (fe-do) and backend (be-do) services
